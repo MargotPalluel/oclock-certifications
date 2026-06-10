@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0062)file:///C:/Users/margo/Downloads/verification_livrables_5.html -->
+<!-- saved from url=(0062)file:///C:/Users/margo/Downloads/verification_livrables_7.html -->
 <html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -348,7 +348,7 @@
 <div class="main">
 
   <!-- AUTH BANNER -->
-  <div class="auth-banner" id="authBanner" style="display:none">
+  <div class="auth-banner" id="authBanner" style="display: flex;">
     <span class="icon">🔐</span>
     <div>
       <strong>Connexion Google requise</strong> — Clique sur <em>Se connecter</em> pour autoriser l'accès à Google Drive (lecture seule).
@@ -601,15 +601,10 @@ async function startAnalysis() {
   if (!folderId) { alert('Merci de renseigner l\'ID du dossier.'); return; }
   if (!titre) { alert('Merci de choisir un titre professionnel.'); return; }
 
-  // Check credentials
-  if (!CLIENT_ID || !API_KEY) {
-    showCredentialsHelper();
-    return;
-  }
-
   if (!accessToken) {
     document.getElementById('authBanner').style.display = 'flex';
     if (tokenClient) tokenClient.requestAccessToken();
+    else { alert('Erreur : librairie Google non chargée. Rechargez la page.'); }
     return;
   }
 
@@ -885,10 +880,13 @@ function logLine(msg, cls='') {
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 window.addEventListener('load', () => {
+  if (CLIENT_ID && API_KEY) {
+    document.getElementById('authBanner').style.display = 'flex';
+  }
   if (typeof gapi !== 'undefined') initGapi();
   if (typeof google !== 'undefined') initGsi();
 });
 </script>
 
 
-<iframe id="apiproxy7d66962ab62eb001b6e60b88c9062494787513f30.2749567226" name="apiproxy7d66962ab62eb001b6e60b88c9062494787513f30.2749567226" src="./Vérification Livrables — Clock_files/proxy.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px; display: none;"></iframe></body></html>
+<iframe id="apiproxy7d66962ab62eb001b6e60b88c9062494787513f30.2370103377" name="apiproxy7d66962ab62eb001b6e60b88c9062494787513f30.2370103377" src="./Vérification Livrables — Clock_files/proxy.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px; display: none;"></iframe></body></html>
