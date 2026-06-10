@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///C:/Users/margo/Downloads/verification_livrables_2.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vérification Livrables — Clock</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface2: #1e2235;
+    --border: #2a2f45;
+    --accent: #4f6ef7;
+    --accent-dim: rgba(79,110,247,0.12);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.12);
+    --orange: #f59e0b;
+    --orange-dim: rgba(245,158,11,0.12);
+    --text: #e8eaf0;
+    --text-muted: #6b7280;
+    --text-dim: #9ca3af;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .header-logo {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: #fff;
+  }
+  .header h1 {
+    font-size: 16px; font-weight: 600; color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .header p { font-size: 12px; color: var(--text-muted); }
+
+  /* MAIN */
+  .main { padding: 32px; max-width: 1400px; margin: 0 auto; }
+
+  /* SETUP CARD */
+  .setup-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+  }
+  .setup-card h2 {
+    font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-muted); margin-bottom: 20px;
+  }
+  .setup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 14px;
+    align-items: end;
+  }
+  .field label {
+    display: block;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-dim); margin-bottom: 6px;
+  }
+  .field input, .field select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--accent);
+  }
+  .field input::placeholder { color: var(--text-muted); }
+  .field select option { background: var(--surface2); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    border: none; border-radius: 7px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .btn:hover { opacity: 0.88; }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+
+  /* AUTH BANNER */
+  .auth-banner {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .auth-banner .icon { font-size: 18px; }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .stat-card .num {
+    font-size: 28px; font-weight: 700; letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-card .label {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 4px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .stat-card.green .num { color: var(--green); }
+  .stat-card.red .num { color: var(--red); }
+  .stat-card.orange .num { color: var(--orange); }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex; gap: 8px; margin-bottom: 16px;
+    flex-wrap: wrap; align-items: center;
+  }
+  .filter-btn {
+    font-size: 12px; font-weight: 500;
+    padding: 6px 14px; border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent; color: var(--text-dim);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .search-input {
+    margin-left: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    padding: 6px 14px;
+    outline: none;
+    width: 200px;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .table-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .table-header h3 { font-size: 13px; font-weight: 600; }
+  .table-header span { font-size: 12px; color: var(--text-muted); }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: var(--surface2);
+    font-size: 11px; font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  td {
+    padding: 12px 16px;
+    font-size: 13px;
+    vertical-align: top;
+  }
+
+  .candidate-name {
+    font-weight: 600; color: var(--text);
+    font-size: 13px;
+  }
+  .candidate-jour {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600;
+    padding: 3px 9px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .badge-conforme { background: var(--green-dim); color: var(--green); }
+  .badge-incomplet { background: var(--red-dim); color: var(--red); }
+  .badge-pages-ok { background: var(--green-dim); color: var(--green); }
+  .badge-pages-ko { background: var(--red-dim); color: var(--red); }
+  .badge-pages-na { background: rgba(107,114,128,0.15); color: var(--text-muted); }
+  .badge-titre {
+    background: var(--accent-dim); color: var(--accent);
+    font-size: 10px; padding: 2px 8px;
+  }
+
+  .livrable-cell { display: flex; flex-direction: column; gap: 4px; }
+  .livrable-item {
+    display: flex; align-items: flex-start; gap: 6px;
+    font-size: 12px; color: var(--text-dim);
+  }
+  .livrable-item .icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .livrable-item .fname {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text-dim);
+    word-break: break-all;
+  }
+  .livrable-item.ok .fname { color: var(--green); }
+  .livrable-item.missing { color: var(--text-muted); font-style: italic; }
+  .livrable-item.optional .fname { color: var(--orange); }
+
+  /* PAGES DETAIL */
+  .pages-detail {
+    font-size: 11px; color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 3px;
+  }
+
+  /* PROGRESS */
+  .loading {
+    text-align: center; padding: 60px 20px;
+    color: var(--text-muted); font-size: 13px;
+  }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .empty {
+    text-align: center; padding: 60px 20px;
+    color: var(--text-muted); font-size: 13px;
+  }
+  .empty .icon { font-size: 40px; margin-bottom: 12px; }
+
+  /* EXPORT */
+  .export-row {
+    display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end;
+  }
+
+  /* PROGRESS LOG */
+  .progress-log {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    max-height: 120px;
+    overflow-y: auto;
+    display: none;
+  }
+  .log-line { margin-bottom: 3px; }
+  .log-line.ok { color: var(--green); }
+  .log-line.err { color: var(--red); }
+  .log-line.info { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .setup-grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: repeat(2,1fr); }
+    .main { padding: 16px; }
+  }
+</style>
+<style id="googleidentityservice_button_styles">.qJTHM{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;color:#202124;direction:ltr;-webkit-touch-callout:none;font-family:Roboto-Regular,arial,sans-serif;-webkit-font-smoothing:antialiased;font-weight:400;margin:0;overflow:hidden;-webkit-text-size-adjust:100%}.ynRLnc{left:-9999px;position:absolute;top:-9999px}.L6cTce{display:none}.bltWBb{overflow-wrap:break-word;word-break:break-word}.hSRGPd{color:#1a73e8;cursor:pointer;font-weight:500;text-decoration:none}.Bz112c-W3lGp{height:16px;width:16px}.Bz112c-E3DyYd{height:20px;width:20px}.Bz112c-r9oPif{height:24px;width:24px}.Bz112c-u2z5K{height:36px;width:36px}.Bz112c-uaxL4e{border-radius:10px}.LgbsSe-Bz112c{display:block}.S9gUrf-YoZ4jf{border:none;margin:0;padding:0}.S9gUrf-YoZ4jf *{border:none;margin:0;padding:0}.fFW7wc-ibnC6b>.aZ2wEe>div{border-color:#4285f4}.P1ekSe-ZMv3u{-webkit-transition:height .2s linear;transition:height .2s linear}.P1ekSe-ZMv3u>div:first-child{background-color:#1a73e8!important;-webkit-transition:width .3s linear;transition:width .3s linear}.P1ekSe-ZMv3u>div:nth-child(2){background-image:-webkit-gradient(linear,left top,right top,from(rgba(255,255,255,.7)),to(rgba(255,255,255,.7))),-webkit-gradient(linear,left top,right top,from(#1a73e8),to(#1a73e8))!important;background-image:-webkit-linear-gradient(left,rgba(255,255,255,.7),rgba(255,255,255,.7)),-webkit-linear-gradient(left,#1a73e8,#1a73e8)!important;background-image:linear-gradient(90deg,rgba(255,255,255,.7),rgba(255,255,255,.7)),linear-gradient(90deg,#1a73e8,#1a73e8)!important}.P1ekSe-ZMv3u>div:nth-child(3){background-image:-webkit-gradient(linear,left top,right top,from(rgba(255,255,255,.7)),to(rgba(255,255,255,.7))),-webkit-gradient(linear,left top,right top,from(#1a73e8),to(#1a73e8))!important;background-image:-webkit-linear-gradient(left,rgba(255,255,255,.7),rgba(255,255,255,.7)),-webkit-linear-gradient(left,#1a73e8,#1a73e8)!important;background-image:linear-gradient(90deg,rgba(255,255,255,.7),rgba(255,255,255,.7)),linear-gradient(90deg,#1a73e8,#1a73e8)!important}.haAclf{display:inline-block}.nsm7Bb-HzV7m-LgbsSe{border-radius:4px;box-sizing:border-box;-webkit-transition:background-color .218s,border-color .218s;transition:background-color .218s,border-color .218s;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;-webkit-appearance:none;background-color:#fff;background-image:none;border:1px solid #dadce0;color:#3c4043;cursor:pointer;font-family:Google Sans,arial,sans-serif;font-size:14px;height:40px;letter-spacing:.25px;outline:none;overflow:hidden;padding:0 12px;position:relative;text-align:center;vertical-align:middle;white-space:nowrap;width:auto}@media screen and (-ms-high-contrast:active){.nsm7Bb-HzV7m-LgbsSe{border:2px solid windowText;color:windowText}}@media screen and (preferes-contrast:more){.nsm7Bb-HzV7m-LgbsSe{color:#000}}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe{font-size:14px;height:32px;letter-spacing:.25px;padding:0 10px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe{font-size:11px;height:20px;letter-spacing:.3px;padding:0 8px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe{padding:0;width:40px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.pSzOP-SxQuSe{width:32px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.purZT-SxQuSe{width:20px}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK{border-radius:20px}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK.pSzOP-SxQuSe{border-radius:16px}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK.purZT-SxQuSe{border-radius:10px}.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc{border:1px solid #8e918f;background-color:#131314;color:#e3e3e3}.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc{border:none;color:#fff}.nsm7Bb-HzV7m-LgbsSe.MFS4be-v3pZbf-Ia7Qfc{background-color:#1a73e8}.nsm7Bb-HzV7m-LgbsSe.MFS4be-JaPV2b-Ia7Qfc{background-color:#202124;color:#e8eaed}@media screen and (prefers-contrast:more){.nsm7Bb-HzV7m-LgbsSe.MFS4be-JaPV2b-Ia7Qfc{color:#fff}}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{height:18px;margin-right:8px;min-width:18px;width:18px}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{height:14px;min-width:14px;width:14px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{height:10px;min-width:10px;width:10px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-Bz112c{margin-left:8px;margin-right:-4px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{margin:0;padding:10px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.pSzOP-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{padding:8px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c{padding:4px}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-top-left-radius:3px;border-bottom-left-radius:3px;display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;align-items:center;background-color:#fff;height:36px;margin-left:-10px;margin-right:12px;min-width:36px;width:36px}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf .nsm7Bb-HzV7m-LgbsSe-Bz112c,.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf .nsm7Bb-HzV7m-LgbsSe-Bz112c{margin:0;padding:0}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{height:28px;margin-left:-8px;margin-right:10px;min-width:28px;width:28px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{height:16px;margin-left:-6px;margin-right:8px;min-width:16px;width:16px}.nsm7Bb-HzV7m-LgbsSe.Bz112c-LgbsSe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:3px;margin-left:2px;margin-right:0;padding:0}.nsm7Bb-HzV7m-LgbsSe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:18px}.nsm7Bb-HzV7m-LgbsSe.pSzOP-SxQuSe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:14px}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:8px}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-align-items:center;-webkit-box-align:center;align-items:center;-webkit-flex-direction:row;-webkit-box-orient:horizontal;-webkit-box-direction:normal;flex-direction:row;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-flex-wrap:nowrap;flex-wrap:nowrap;height:100%;position:relative;width:100%}.nsm7Bb-HzV7m-LgbsSe .oXtfBe-l4eHX{-webkit-box-pack:center;-webkit-justify-content:center;justify-content:center}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId{-webkit-flex-grow:1;-webkit-box-flex:1;flex-grow:1;font-family:Google Sans,arial,sans-serif;font-weight:500;overflow:hidden;text-overflow:ellipsis;vertical-align:top}.nsm7Bb-HzV7m-LgbsSe.purZT-SxQuSe .nsm7Bb-HzV7m-LgbsSe-BPrWId{font-weight:300}.nsm7Bb-HzV7m-LgbsSe .oXtfBe-l4eHX .nsm7Bb-HzV7m-LgbsSe-BPrWId{-webkit-flex-grow:0;-webkit-box-flex:0;flex-grow:0}.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-MJoBVe{-webkit-transition:background-color .218s;transition:background-color .218s;bottom:0;left:0;position:absolute;right:0;top:0}.nsm7Bb-HzV7m-LgbsSe:focus,.nsm7Bb-HzV7m-LgbsSe:hover{box-shadow:none;border-color:rgb(210,227,252);outline:none}.nsm7Bb-HzV7m-LgbsSe:focus-within{outline:2px solid #00639b;border-color:transparent}.nsm7Bb-HzV7m-LgbsSe:hover .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(66,133,244,.08)}.nsm7Bb-HzV7m-LgbsSe:active .nsm7Bb-HzV7m-LgbsSe-MJoBVe,.nsm7Bb-HzV7m-LgbsSe:focus .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(66,133,244,.1)}.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc:hover .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.08)}.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc:active .nsm7Bb-HzV7m-LgbsSe-MJoBVe,.nsm7Bb-HzV7m-LgbsSe.i5vt6e-to915-Ia7Qfc:focus .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.12)}.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc:hover .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.24)}.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc:active .nsm7Bb-HzV7m-LgbsSe-MJoBVe,.nsm7Bb-HzV7m-LgbsSe.MFS4be-Ia7Qfc:focus .nsm7Bb-HzV7m-LgbsSe-MJoBVe{background:rgba(255,255,255,.32)}.nsm7Bb-HzV7m-LgbsSe .n1UuX-DkfjY{border-radius:50%;display:-webkit-box;display:-webkit-flex;display:flex;height:20px;margin-left:-4px;margin-right:8px;min-width:20px;width:20px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId{font-family:Roboto;font-size:12px;text-align:left}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff .fmcmS,.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .ssJRIf{overflow:hidden;text-overflow:ellipsis}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-align-items:center;-webkit-box-align:center;align-items:center;color:#5f6368;fill:#5f6368;font-size:11px;font-weight:400}.nsm7Bb-HzV7m-LgbsSe.jVeSEe.MFS4be-Ia7Qfc .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff{color:#e8eaed;fill:#e8eaed}@media screen and (prefers-contrast:more){.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff,.nsm7Bb-HzV7m-LgbsSe.jVeSEe.MFS4be-Ia7Qfc .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff{color:#000;fill:#000}}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-BPrWId .K4efff .Bz112c{height:18px;margin:-3px -3px -3px 2px;min-width:18px;width:18px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-top-left-radius:0;border-bottom-left-radius:0;border-top-right-radius:3px;border-bottom-right-radius:3px;margin-left:12px;margin-right:-10px}.nsm7Bb-HzV7m-LgbsSe.jVeSEe.JGcpL-RbRzK .nsm7Bb-HzV7m-LgbsSe-Bz112c-haAclf{border-radius:18px}.L5Fo6c-sM5MNb{border:0;display:block;left:0;position:relative;top:0}.L5Fo6c-bF1uUb{border-radius:4px;bottom:0;cursor:pointer;left:0;position:absolute;right:0;top:0}.L5Fo6c-bF1uUb:focus{border:none;outline:none}sentinel{}</style></head>
+<body>
+
+<div class="header">
+  <div class="header-logo">C</div>
+  <div>
+    <h1>Vérification Livrables</h1>
+    <p>Contrôle automatique des dossiers candidats</p>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- AUTH BANNER -->
+  <div class="auth-banner" id="authBanner" style="display:none">
+    <span class="icon">🔐</span>
+    <div>
+      <strong>Connexion Google requise</strong> — Clique sur <em>Se connecter</em> pour autoriser l'accès à Google Drive (lecture seule).
+    </div>
+    <button class="btn" style="margin-left:auto" onclick="signIn()">Se connecter</button>
+  </div>
+
+  <!-- SETUP -->
+  <div class="setup-card">
+    <h2>Configuration de la session</h2>
+    <div class="setup-grid">
+      <div class="field">
+        <label>ID du dossier SAUVEGARDES CANDIDATS</label>
+        <input type="text" id="folderId" placeholder="Ex: 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs">
+      </div>
+      <div class="field">
+        <label>Titre professionnel de la session</label>
+        <select id="titreSelect">
+          <option value="">— Choisir —</option>
+          <option value="DWWM">DWWM</option>
+          <option value="CDA">CDA</option>
+          <option value="DEVOPS">DEVOPS (ASD)</option>
+          <option value="CDUI">CDUI</option>
+          <option value="AIS">AIS</option>
+          <option value="TSSR">TSSR</option>
+        </select>
+      </div>
+      <button class="btn" id="analyzeBtn" onclick="startAnalysis()">
+        <span>▶</span> Analyser
+      </button>
+    </div>
+    <div style="margin-top:14px; font-size:12px; color:var(--text-muted)">
+      💡 L'ID se trouve dans l'URL Google Drive : <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-family:&#39;JetBrains Mono&#39;,monospace">https://drive.google.com/drive/folders/<strong>[ID ICI]</strong></code>
+    </div>
+  </div>
+
+  <!-- PROGRESS LOG -->
+  <div class="progress-log" id="progressLog"></div>
+
+  <!-- RESULTS -->
+  <div id="results" style="display:none">
+
+    <div class="stats-bar" id="statsBar"></div>
+
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" onclick="setFilter(&#39;all&#39;,this)">Tous</button>
+      <button class="filter-btn" onclick="setFilter(&#39;incomplet&#39;,this)">⚠ Incomplets</button>
+      <button class="filter-btn" onclick="setFilter(&#39;conforme&#39;,this)">✓ Conformes</button>
+      <button class="filter-btn" onclick="setFilter(&#39;pages_ko&#39;,this)">📄 Pages non conformes</button>
+      <input type="text" class="search-input" placeholder="🔍 Rechercher un candidat…" oninput="filterSearch(this.value)">
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-header">
+        <h3 id="tableTitle">Résultats</h3>
+        <span id="tableCount"></span>
+      </div>
+      <div style="overflow-x:auto">
+        <table id="resultsTable">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="export-row">
+      <button class="btn btn-ghost" onclick="exportCSV()">⬇ Exporter CSV</button>
+      <button class="btn btn-ghost" onclick="exportExcel()">⬇ Exporter Excel</button>
+    </div>
+  </div>
+
+  <div id="emptyState" style="display:none" class="empty">
+    <div class="icon">📂</div>
+    <p>Aucun dossier candidat trouvé dans ce répertoire.</p>
+  </div>
+</div>
+
+<!-- Google API -->
+<script src="./Vérification Livrables — Clock_files/cb=gapi.loaded_0" async=""></script><script src="./Vérification Livrables — Clock_files/api.js.téléchargement" gapi_processed="true"></script>
+<script src="./Vérification Livrables — Clock_files/client"></script>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const CLIENT_ID = '240010740837-rq2l14fpd7hk4mtls9qvp8jmcvvfs93d.apps.googleusercontent.com';
+const API_KEY   = 'AIzaSyCQlEBYPhy39k-tXWI1qEjSQGiEYwbkZcU';
+const SCOPES    = 'https://www.googleapis.com/auth/drive.readonly';
+
+// ─── RÈGLES PAR TITRE ─────────────────────────────────────────────────────────
+const TITRE_RULES = {
+  DWWM: {
+    livrables: ['livret_ecf','dossier_projet','dossier_professionnel','presentation'],
+    optionnel: [],
+    pages: { min: 30, max: 50, annexes_max: 30, label: '30–50 pages (hors PG/sommaire/annexes)' }
+  },
+  CDA: {
+    livrables: ['livret_ecf','dossier_projet','dossier_professionnel','presentation'],
+    optionnel: [],
+    pages: { min: 40, max: 60, annexes_max: 40, label: '40–60 pages (hors PG/sommaire/annexes)' }
+  },
+  DEVOPS: {
+    livrables: ['livret_ecf','dossier_projet','dossier_professionnel','presentation'],
+    optionnel: [],
+    pages: null
+  },
+  CDUI: {
+    livrables: ['livret_ecf','dossier_professionnel','dossier_projet','presentation','animation_video','support_communication'],
+    optionnel: [],
+    pages: null
+  },
+  AIS: {
+    livrables: ['livret_ecf','dossier_projet','dossier_professionnel','presentation','preuve_350h'],
+    optionnel: [],
+    pages: null
+  },
+  TSSR: {
+    livrables: ['livret_ecf','dossier_professionnel'],
+    optionnel: [],
+    pages: null
+  }
+};
+
+const LIVRABLE_LABELS = {
+  livret_ecf: 'Livret ECF',
+  dossier_projet: 'Dossier de projet',
+  dossier_professionnel: 'Dossier professionnel',
+  presentation: 'Présentation',
+  animation_video: 'Animation vidéo',
+  support_communication: 'Support de communication',
+  preuve_350h: 'Preuve 350h entreprise'
+};
+
+const KEYWORDS = {
+  livret_ecf: ['ecf','livret'],
+  dossier_projet: ['projet','project'],
+  dossier_professionnel: ['professionnel','dp ','_dp.','dp_'],
+  presentation: ['presentation','présentation','pres ','_pres.'],
+  animation_video: ['animation','video','vidéo'],
+  support_communication: ['communication','support'],
+  preuve_350h: ['350','preuve','attestation','contrat','convention','stage']
+};
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let allCandidates = [];
+let currentFilter = 'all';
+let currentSearch = '';
+let tokenClient;
+let accessToken = null;
+
+// ─── GOOGLE AUTH ──────────────────────────────────────────────────────────────
+function initGapi() {
+  gapi.load('client', async () => {
+    if (!API_KEY) return;
+    await gapi.client.init({ apiKey: API_KEY, discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'] });
+  });
+}
+
+function initGsi() {
+  if (!CLIENT_ID) return;
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: SCOPES,
+    callback: (resp) => {
+      if (resp.error) { logLine('Erreur auth: ' + resp.error, 'err'); return; }
+      accessToken = resp.access_token;
+      document.getElementById('authBanner').style.display = 'none';
+      logLine('✓ Connecté à Google Drive', 'ok');
+      doAnalysis();
+    }
+  });
+}
+
+function signIn() {
+  if (tokenClient) tokenClient.requestAccessToken();
+}
+
+// ─── DRIVE API ────────────────────────────────────────────────────────────────
+async function listFolder(folderId) {
+  const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(`'${folderId}' in parents and trashed=false`)}&fields=files(id,name,mimeType,size)&pageSize=200`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.files || [];
+}
+
+async function getPageCount(fileId, mimeType) {
+  // For PDF: use Drive API to get page count via export
+  // We use the files.get endpoint to get the PDF metadata
+  try {
+    const url = `https://www.googleapis.com/drive/v3/files/${fileId}?fields=name,mimeType,size,fileExtension`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
+    const meta = await res.json();
+
+    // Download first bytes and count pages for PDF
+    if (mimeType === 'application/pdf' || meta.fileExtension === 'pdf') {
+      return await countPDFPages(fileId);
+    }
+    // For Word docs, we can't reliably count pages without rendering
+    return null;
+  } catch(e) { return null; }
+}
+
+async function countPDFPages(fileId) {
+  try {
+    const url = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
+    const buffer = await res.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    const str = new TextDecoder('latin1').decode(bytes);
+    // Count /Type /Page occurrences (standard PDF page count method)
+    const matches = str.match(/\/Type\s*\/Page[^s]/g);
+    if (matches) return matches.length;
+    // Fallback: count stream objects as rough estimate
+    return null;
+  } catch(e) { return null; }
+}
+
+// ─── IDENTIFY LIVRABLE ────────────────────────────────────────────────────────
+function identifyLivrable(filename) {
+  const lower = filename.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  for (const [key, kws] of Object.entries(KEYWORDS)) {
+    for (const kw of kws) {
+      if (lower.includes(kw)) return key;
+    }
+  }
+  return null;
+}
+
+function isDocumentFile(file) {
+  const docMimes = [
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/msword',
+    'application/vnd.google-apps.document',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.google-apps.presentation',
+    'video/mp4','video/avi','video/quicktime','video/x-msvideo',
+    'image/jpeg','image/png','image/gif'
+  ];
+  const ext = file.name.toLowerCase().split('.').pop();
+  const docExts = ['pdf','doc','docx','ppt','pptx','mp4','avi','mov','jpg','png','gif','jpeg'];
+  return docMimes.includes(file.mimeType) || docExts.includes(ext);
+}
+
+// ─── MAIN ANALYSIS ────────────────────────────────────────────────────────────
+async function startAnalysis() {
+  const folderId = document.getElementById('folderId').value.trim();
+  const titre = document.getElementById('titreSelect').value;
+
+  if (!folderId) { alert('Merci de renseigner l\'ID du dossier.'); return; }
+  if (!titre) { alert('Merci de choisir un titre professionnel.'); return; }
+
+  // Check credentials
+  if (!CLIENT_ID || !API_KEY) {
+    showCredentialsHelper();
+    return;
+  }
+
+  if (!accessToken) {
+    document.getElementById('authBanner').style.display = 'flex';
+    if (tokenClient) tokenClient.requestAccessToken();
+    return;
+  }
+
+  doAnalysis();
+}
+
+async function doAnalysis() {
+  const folderId = document.getElementById('folderId').value.trim();
+  const titre = document.getElementById('titreSelect').value;
+  const rules = TITRE_RULES[titre];
+
+  document.getElementById('analyzeBtn').disabled = true;
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('emptyState').style.display = 'none';
+
+  const log = document.getElementById('progressLog');
+  log.style.display = 'block';
+  log.innerHTML = '';
+
+  allCandidates = [];
+
+  try {
+    logLine('📂 Lecture du dossier racine…', 'info');
+    const jourFolders = (await listFolder(folderId)).filter(f => f.mimeType === 'application/vnd.google-apps.folder' && f.name.startsWith('0'));
+    logLine(`→ ${jourFolders.length} dossier(s) JOUR trouvé(s)`, 'ok');
+
+    for (const jour of jourFolders) {
+      logLine(`📅 Lecture ${jour.name}…`, 'info');
+      const items = await listFolder(jour.id);
+      const candidateFolders = items.filter(f =>
+        f.mimeType === 'application/vnd.google-apps.folder' &&
+        !f.name.startsWith('0') // exclure les sous-dossiers JURY_X
+      );
+      logLine(`→ ${candidateFolders.length} candidat(s) dans ${jour.name}`, 'ok');
+
+      for (const cf of candidateFolders) {
+        logLine(`👤 Analyse: ${cf.name}`, 'info');
+        const candidate = await analyzeCandidate(cf, jour.name, titre, rules);
+        allCandidates.push(candidate);
+      }
+    }
+
+    if (allCandidates.length === 0) {
+      document.getElementById('emptyState').style.display = 'block';
+    } else {
+      renderResults(titre);
+      document.getElementById('results').style.display = 'block';
+    }
+
+  } catch(e) {
+    logLine('❌ Erreur: ' + e.message, 'err');
+    console.error(e);
+  }
+
+  document.getElementById('analyzeBtn').disabled = false;
+}
+
+async function analyzeCandidate(folder, jourName, titre, rules) {
+  const files = (await listFolder(folder.id)).filter(isDocumentFile);
+  const found = {}; // livrable_key => {name, file}
+
+  for (const file of files) {
+    const key = identifyLivrable(file.name);
+    if (key && !found[key]) {
+      found[key] = { name: file.name, file };
+    }
+  }
+
+  // All files that weren't identified
+  const unidentified = files.filter(f => !identifyLivrable(f.name));
+
+  // Check pages for dossier projet
+  let pagesInfo = null;
+  if (found['dossier_projet'] && rules.pages) {
+    logLine(`  📄 Comptage pages: ${found['dossier_projet'].name}…`, 'info');
+    const count = await getPageCount(found['dossier_projet'].file.id, found['dossier_projet'].file.mimeType);
+    pagesInfo = { count, rules: rules.pages };
+  }
+
+  const missingRequired = rules.livrables.filter(l => !found[l]);
+  const isConforme = missingRequired.length === 0;
+  const pagesOk = !rules.pages ? null :
+    (pagesInfo && pagesInfo.count !== null) ?
+      (pagesInfo.count >= rules.pages.min && pagesInfo.count <= rules.pages.max) : null;
+
+  return {
+    name: folder.name,
+    jour: jourName,
+    titre,
+    found,
+    unidentified,
+    missing: missingRequired,
+    isConforme,
+    pagesInfo,
+    pagesOk
+  };
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderResults(titre) {
+  const rules = TITRE_RULES[titre];
+  const total = allCandidates.length;
+  const conformes = allCandidates.filter(c => c.isConforme).length;
+  const incomplets = total - conformes;
+  const pagesKo = allCandidates.filter(c => c.pagesOk === false).length;
+
+  // Stats
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-card"><div class="num">${total}</div><div class="label">Candidats analysés</div></div>
+    <div class="stat-card green"><div class="num">${conformes}</div><div class="label">Dossiers conformes</div></div>
+    <div class="stat-card red"><div class="num">${incomplets}</div><div class="label">Dossiers incomplets</div></div>
+    <div class="stat-card orange"><div class="num">${pagesKo}</div><div class="label">Pages non conformes</div></div>
+  `;
+
+  // Table head
+  const livrables = rules.livrables;
+  document.getElementById('tableHead').innerHTML = `<tr>
+    <th>Candidat</th>
+    <th>Statut</th>
+    ${livrables.map(l => `<th>${LIVRABLE_LABELS[l]}</th>`).join('')}
+    ${rules.pages ? '<th>Pages dossier projet</th>' : ''}
+    <th>Fichiers non identifiés</th>
+  </tr>`;
+
+  renderTableBody(livrables, rules);
+}
+
+function renderTableBody(livrables, rules) {
+  const filtered = allCandidates.filter(c => {
+    if (currentFilter === 'conforme' && !c.isConforme) return false;
+    if (currentFilter === 'incomplet' && c.isConforme) return false;
+    if (currentFilter === 'pages_ko' && c.pagesOk !== false) return false;
+    if (currentSearch && !c.name.toLowerCase().includes(currentSearch.toLowerCase())) return false;
+    return true;
+  });
+
+  document.getElementById('tableCount').textContent = `${filtered.length} / ${allCandidates.length} candidat(s)`;
+
+  document.getElementById('tableBody').innerHTML = filtered.map(c => {
+    const statutBadge = c.isConforme
+      ? `<span class="badge badge-conforme">✓ Conforme</span>`
+      : `<span class="badge badge-incomplet">✗ Incomplet</span>`;
+
+    const livrableCells = livrables.map(l => {
+      if (c.found[l]) {
+        return `<td><div class="livrable-item ok"><span class="icon">✅</span><span class="fname">${escHtml(c.found[l].name)}</span></div></td>`;
+      } else {
+        return `<td><div class="livrable-item missing"><span class="icon">❌</span><span>Manquant</span></div></td>`;
+      }
+    }).join('');
+
+    let pagesCell = '';
+    if (rules.pages) {
+      if (c.pagesInfo && c.pagesInfo.count !== null) {
+        const ok = c.pagesOk;
+        const cls = ok ? 'badge-pages-ok' : 'badge-pages-ko';
+        pagesCell = `<td>
+          <span class="badge ${cls}">${c.pagesInfo.count} pages</span>
+          <div class="pages-detail">${rules.pages.label}</div>
+        </td>`;
+      } else if (c.found['dossier_projet']) {
+        pagesCell = `<td><span class="badge badge-pages-na">Format Word — vérification manuelle</span></td>`;
+      } else {
+        pagesCell = `<td><span class="badge badge-pages-na">—</span></td>`;
+      }
+    }
+
+    const unidCell = c.unidentified.length > 0
+      ? `<td><div class="livrable-cell">${c.unidentified.map(f => `<div class="livrable-item optional"><span class="icon">⚠️</span><span class="fname">${escHtml(f.name)}</span></div>`).join('')}</div></td>`
+      : `<td><span style="color:var(--text-muted);font-size:12px">—</span></td>`;
+
+    return `<tr>
+      <td>
+        <div class="candidate-name">${escHtml(c.name)}</div>
+        <div class="candidate-jour">${c.jour}</div>
+      </td>
+      <td>${statutBadge}</td>
+      ${livrableCells}
+      ${pagesCell}
+      ${unidCell}
+    </tr>`;
+  }).join('') || `<tr><td colspan="20" style="text-align:center;padding:40px;color:var(--text-muted)">Aucun résultat pour ce filtre</td></tr>`;
+}
+
+// ─── FILTERS ──────────────────────────────────────────────────────────────────
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const titre = document.getElementById('titreSelect').value;
+  renderTableBody(TITRE_RULES[titre].livrables, TITRE_RULES[titre]);
+}
+
+function filterSearch(val) {
+  currentSearch = val;
+  const titre = document.getElementById('titreSelect').value;
+  renderTableBody(TITRE_RULES[titre].livrables, TITRE_RULES[titre]);
+}
+
+// ─── EXPORT ───────────────────────────────────────────────────────────────────
+function exportCSV() {
+  const titre = document.getElementById('titreSelect').value;
+  const rules = TITRE_RULES[titre];
+  const headers = ['Candidat','Jour','Statut',...rules.livrables.map(l=>LIVRABLE_LABELS[l])];
+  if (rules.pages) headers.push('Pages dossier projet');
+  const rows = allCandidates.map(c => {
+    const row = [c.name, c.jour, c.isConforme ? 'Conforme' : 'Incomplet'];
+    rules.livrables.forEach(l => row.push(c.found[l] ? c.found[l].name : 'MANQUANT'));
+    if (rules.pages) row.push(c.pagesInfo?.count ?? 'N/A');
+    return row;
+  });
+  const csv = [headers,...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  download('verification_livrables.csv', 'text/csv', csv);
+}
+
+function exportExcel() {
+  const titre = document.getElementById('titreSelect').value;
+  const rules = TITRE_RULES[titre];
+  const headers = ['Candidat','Jour','Statut',...rules.livrables.map(l=>LIVRABLE_LABELS[l])];
+  if (rules.pages) headers.push('Pages dossier projet');
+
+  let xml = `<?xml version="1.0"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"><Worksheet ss:Name="Livrables"><Table>`;
+  const toRow = cells => `<Row>${cells.map(c=>`<Cell><Data ss:Type="String">${escHtml(String(c))}</Data></Cell>`).join('')}</Row>`;
+  xml += toRow(headers);
+  allCandidates.forEach(c => {
+    const row = [c.name, c.jour, c.isConforme ? 'Conforme' : 'Incomplet'];
+    rules.livrables.forEach(l => row.push(c.found[l] ? c.found[l].name : 'MANQUANT'));
+    if (rules.pages) row.push(c.pagesInfo?.count ?? 'N/A');
+    xml += toRow(row);
+  });
+  xml += '</Table></Worksheet></Workbook>';
+  download('verification_livrables.xls', 'application/vnd.ms-excel', xml);
+}
+
+function download(filename, type, content) {
+  const blob = new Blob([content], {type});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+// ─── CREDENTIALS HELPER ───────────────────────────────────────────────────────
+function showCredentialsHelper() {
+  document.getElementById('results').style.display = 'none';
+  const log = document.getElementById('progressLog');
+  log.style.display = 'block';
+  log.innerHTML = `
+<div class="log-line err">⚠️ Identifiants Google API non configurés.</div>
+<div class="log-line" style="margin-top:8px;color:var(--text-dim)">Pour utiliser cette application, tu dois configurer deux identifiants Google :</div>
+<div class="log-line" style="margin-top:8px;color:var(--orange)">1. Va sur https://console.cloud.google.com</div>
+<div class="log-line" style="color:var(--text-dim)">   → Crée un projet → Active l'API Google Drive</div>
+<div class="log-line" style="color:var(--text-dim)">   → Identifiants → Créer une clé API → copie-la comme API_KEY</div>
+<div class="log-line" style="color:var(--text-dim)">   → Identifiants → Créer un ID client OAuth 2.0 (type: Web) → copie-le comme CLIENT_ID</div>
+<div class="log-line" style="margin-top:8px;color:var(--orange)">2. Dans le fichier HTML, remplace :</div>
+<div class="log-line" style="color:var(--text-dim)">   const CLIENT_ID = 'COLLE_TON_CLIENT_ID_ICI';</div>
+<div class="log-line" style="color:var(--text-dim)">   const API_KEY   = 'COLLE_TA_CLE_API_ICI';</div>
+<div class="log-line" style="margin-top:8px;color:var(--green)">✓ Besoin d'aide pour cette étape ? Dis-le moi, je t'explique en détail !</div>
+  `;
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function logLine(msg, cls='') {
+  const log = document.getElementById('progressLog');
+  const d = document.createElement('div');
+  d.className = 'log-line ' + cls;
+  d.textContent = msg;
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  if (typeof gapi !== 'undefined') initGapi();
+  if (typeof google !== 'undefined') initGsi();
+});
+</script>
+
+
+<iframe id="apiproxy7d66962ab62eb001b6e60b88c9062494787513f30.1671492712" name="apiproxy7d66962ab62eb001b6e60b88c9062494787513f30.1671492712" src="./Vérification Livrables — Clock_files/proxy.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px; display: none;"></iframe></body></html>
